@@ -7,6 +7,7 @@ from urllib.parse import urlencode
 from random import randint
 import http.client
 import json
+import requests
 
 # Create your views here.
 
@@ -96,36 +97,29 @@ def signup(request):
         
         # Calling the SMS Service provider API and decoding the information
         # The request is a GET Request to a server, and should be converted to POST requests in next builds
-        conn = http.client.HTTPConnection("control.msg91.com")
-        conn.request("GET", "/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
-        res = conn.getresponse()
-        data = res.read()
-        data = data.decode("utf-8")
+        conn = requests.get("http://control.msg91.com/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
 
-        if len(data) == 24:
-            # If the hash returned from the API is of length 24, the message is sent
+        # Initialize new User Object and Verification Object
+        user = User(phoneNumber = phoneNumber, password = password)
+        user.save()
+        verification = Verification(otp = otp, user = user, numberOfTries = 1)
+        verification.save()
 
-            # Initialize new User Object and Verification Object
-            user = User(phoneNumber = phoneNumber, password = password)
-            user.save()
-            verification = Verification(otp = otp, user = user, numberOfTries = 1)
-            verification.save()
+        # Make the token payload
+        authData = {
+            "userId": user.id,
+            "verificationId": verification.id,
+            "phoneNumber": user.phoneNumber
+        }
 
-            # Make the token payload
-            authData = {
-                "userId": user.id,
-                "verificationId": verification.id,
-                "phoneNumber": user.phoneNumber
-            }
+        # Encoding the token
+        token = encodeJWT(authData, "Secret Keyword")
 
-            # Encoding the token
-            token = encodeJWT(authData, "Secret Keyword")
-
-            return JsonResponse({
-                "success": "True",
-                "message": "redirect to endpoint for the otp",
-                "token": str(token)[2 : -1]
-            })
+        return JsonResponse({
+            "success": "True",
+            "message": "redirect to endpoint for the otp",
+            "token": str(token)[2 : -1]
+        })
 
 def signupOTPHandling(request):
     """
@@ -197,11 +191,7 @@ def resendOTP(request):
     otp = "".join(str(x) for x in [randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9)])
     
     # Calling the SMS Service provider API and decoding the information
-    conn = http.client.HTTPConnection("control.msg91.com")
-    conn.request("GET", "/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
-    res = conn.getresponse()
-    data = res.read()
-    data = data.decode("utf-8")
+    conn = requests.get("http://control.msg91.com/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
 
     # The DB record of the OTP is updated
     verificationObject.otp = otp

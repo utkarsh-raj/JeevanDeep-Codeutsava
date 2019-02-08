@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from sd_backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authAPI.urls')),
+    path('', views.splash, name='splash'),
 ]
