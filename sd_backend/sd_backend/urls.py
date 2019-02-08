@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authAPI.urls')),
     path('', views.splash, name='splash'),
+    path('feed/', include('ask_feed.urls'),)
 ]
