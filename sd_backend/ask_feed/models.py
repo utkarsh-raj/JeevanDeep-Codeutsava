@@ -9,7 +9,7 @@ class Ranger(models.Model):
         return self.name
 
 class Ask(models.Model):
-    author = models.ForeignKey(Ranger, on_delete=models.CASCADE)
+    ranger = models.ForeignKey(Ranger, on_delete=models.CASCADE)
     content = models.CharField(max_length=3000, default=1)
     cheers = models.IntegerField(default=0)
 
@@ -18,7 +18,7 @@ class Ask(models.Model):
 
 class Answer(models.Model):
     ask = models.ForeignKey(Ask, on_delete=models.CASCADE)
-    author = models.ForeignKey(Ranger, on_delete=models.CASCADE)
+    ranger = models.ForeignKey(Ranger, on_delete=models.CASCADE)
     answer = models.CharField(max_length = 5000, default = 1)
     upvotes = models.IntegerField(default=0)
 

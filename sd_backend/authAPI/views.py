@@ -161,7 +161,8 @@ def signupOTPHandling(request):
         token = encodeJWT(authData, "Secret Keyword")
         return JsonResponse({
             "success": "True",
-            "message": "redirect to the endpoint for completing the profile"
+            "message": "redirect to the endpoint for completing the profile",
+            "token": token
         })
     else:
         return JsonResponse({
