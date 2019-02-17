@@ -116,7 +116,7 @@ def user_signup(request):
         return JsonResponse({
             "success": "true",
             "message": "redirect to endpoint for the otp",
-            "token": str(token)[2 : -1]
+            "access_token": str(token)[2 : -1]
         })
     else:
         return JsonResponse({
@@ -163,11 +163,11 @@ def user_signupOTPHandling(request):
         }
 
         # Encoding the token
-        token = encodeJWT(authData, "Secret Keyword")
+        access_token = encodeJWT(authData, "Secret Keyword")
         return JsonResponse({
             "success": "true",
             "message": "redirect to the endpoint for completing the profile",
-            "token": str(access_token)[2 : -1]
+            "access_token": str(access_token)[2 : -1]
         })
     else:
         return JsonResponse({

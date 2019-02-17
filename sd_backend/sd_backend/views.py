@@ -39,6 +39,7 @@ def fcm(request):
         print(request.POST)
         access_token = request.POST["access_token"]
         fcm = request.POST["fcm"]
+        print(fcm)
 
         authData = decodeJWT(access_token, "Secret Keyword")
 
@@ -89,7 +90,7 @@ def req(request):
                 "verified": donor.verified
             })
         response = {
-            "status": "success",
+            "success": "true",
             "access_token": access_token,
             "donor_list": donor_list
         }
@@ -103,7 +104,7 @@ def bank_req(request):
         authData = decodeJWT(access_token, "Secret Keyword")
         print(authData)
 
-        blood_bank_instance = Blood_Bank.objects.get(id = authData["bankId"])
+        # blood_bank_instance = Blood_Bank.objects.get(id = authData["bankId"])
         
         banks = Blood_Bank.objects.all()
 
@@ -119,7 +120,7 @@ def bank_req(request):
                 "longitude": bank.longitude
             })
         response = {
-            "status": "success",
+            "success": "true",
             "access_token": access_token,
             "bank_list": bank_list
         }
@@ -130,34 +131,40 @@ def request_blood(request):
 
     # If no fcm is being sent retrieve from the DB.
     access_token = request.POST["access_token"]
-    fcm = request.POST["fcm"]
+    # fcm = request.POST["fcm"]
+    authData = decodeJWT(access_token, "Secret Keyword")
+    print(authData)
+
+    user_instance = User.objects.get(id = authData["userId"])
+    fcm = user_instance.fcm
     
-    if request.POST == "POST":
+    if request.method == "POST":
         name = request.POST["name"]
         age = request.POST["age"]
         phoneNumber = request.POST["phoneNumber"]
         treatment = request.POST["treatment"]
-        number_of_units = request.POST["num_of_units"]
+        number_of_units = request.POST["number_of_units"]
         blood_group = request.POST["blood_group"]
-        date = request.POST["date"]
+        # date = request.POST["date"]
 
         donors = User.objects.all()
 
         for donor in donors:
-            if fcm != donor.fcm:
+            print(donor.fcm)
+            if fcm != donor.fcm or fcm == donor.fcm:
                 message = messaging.Message(data = {
                     "name": name,
                     "age": age,
                     "phoneNumber": phoneNumber,
                     "treatment": treatment,
                     "number_of_units": number_of_units,
-                    "blood_group": blood_group,
-                    "date": date
+                    "blood_group": blood_group
                 }, token = donor.fcm)
 
                 response = messaging.send(message)
+                print(response)
 
-        print("Response sent", response)
+        print("Response sent")
         return JsonResponse({
             "success": "true",
             "access_token": access_token
@@ -179,7 +186,7 @@ def bank_create(request):
         campaign = Campaign(name = name, blood_bank = blood_bank_instance, location = location, state = state, description = description)
         campaign.save()
         response = {
-            "status": "success",
+            "success": "true",
             "access_token": access_token,
         }
 
@@ -200,7 +207,7 @@ def add_donation(request):
     donation.save()
 
     response = {
-        "status": "success",
+        "success": "true",
         "access_token": access_token,
     }
 
@@ -233,7 +240,7 @@ def campaign_list(request):
             })
         print(campaign_list)
         response = {
-            "status": "success",
+            "success": "true",
             "access_token": access_token,
             "campaign_list": campaign_list
         }

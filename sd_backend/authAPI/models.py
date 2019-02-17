@@ -38,7 +38,7 @@ class Blood_Bank(models.Model):
     name = models.CharField(max_length = 500, help_text = "The Blood Bank Name", default = 1)
     location = models.CharField(max_length = 500, help_text = "The Bank location in word")
     state = models.CharField(max_length = 500, help_text = "The state of the User", default = 0)
-    image = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = 0)
+    image = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = "https://excelcityindia.com/oc-content/uploads/40/4927.png")
     latitude = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = 0)
     longitude = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = 0)
 
@@ -58,7 +58,7 @@ class Campaign(models.Model):
     # blood_group = models.CharField(max_length = 5, help_text = "The Blood Group of the User", default = 0)
     location = models.CharField(max_length = 500, help_text = "The Location of the User", default = 0)
     state = models.CharField(max_length = 500, help_text = "The state of the User", default = 0)
-    image = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = 0)
+    image = models.CharField(max_length = 2000, help_text = "The image of the campaign", default = "https://excelcityindia.com/oc-content/uploads/40/4927.png")
     description = models.CharField(max_length = 2000, help_text = "The Description of the campaign", default = 0)
     registered_users = models.CharField(max_length = 200, help_text = "The registered number of users in the campaign", default = 0)
     latitude = models.CharField(max_length = 200, help_text = "The registered number of users in the campaign", default = 0)
