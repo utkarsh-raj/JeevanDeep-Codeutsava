@@ -29,5 +29,6 @@ urlpatterns = [
     path('add_donation/', views.add_donation, name="add_donation"),
     path('bank/campaign/req', views.campaign_list, name="campaign_list"),
     # path('view_donations/', views.view_donations, name="view_donations"),
-    path('bank/update/', views.bank_update, name="update_banks")
+    path('bank/update/', views.bank_update, name="update_banks"),
+    path('get_bank_data/', views.get_bank_data, name="get_bank_data"),
 ]

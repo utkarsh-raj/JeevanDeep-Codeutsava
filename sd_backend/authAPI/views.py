@@ -253,7 +253,7 @@ def bank_signup(request):
         # verification = Verification(otp = otp, user = user, numberOfTries = 1)
         # verification.save()
 
-        blood_bank_instance = Blood_Bank(phoneNumber = phoneNumber, location = location, name = name, state = state)
+        blood_bank_instance = Blood_Bank(phoneNumber = phoneNumber, location = location, name = name)
         blood_bank_instance.save()
 
         # Make the token payload

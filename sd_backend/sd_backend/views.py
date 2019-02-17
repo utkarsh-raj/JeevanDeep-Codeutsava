@@ -4,6 +4,8 @@ from firebase_admin import messaging
 from firebase_admin import credentials
 from authAPI.models import User, Verification, Blood_Bank, Donation, Blood_Unit, Campaign
 import jwt
+import time
+import requests
 firebase_admin.initialize_app(credentials.Certificate("/home/utkarsh/Downloads/sabkamalikek-36e1c-firebase-adminsdk-6n3ol-5bf162ba94.json"))
 
 def encrypt(string, secret):
@@ -38,8 +40,8 @@ def fcm(request):
     if request.method == "POST":
         print(request.POST)
         access_token = request.POST["access_token"]
-        fcm = request.POST["fcm"]
-        print(fcm, "fcm")
+        # fcm = request.POST["fcm"]
+        # print(fcm, "fcm")
 
         authData = decodeJWT(access_token, "Secret Keyword")
         print(authData)
@@ -47,7 +49,7 @@ def fcm(request):
         user_instance = User.objects.get(id = authData["userId"])
         user_instance.fcm = fcm
         user_instance.save()
-        print(user_instance.fcm, "fcm of the User is updated.")
+        # print(user_instance.fcm, "fcm of the User is updated.")
 
         # message = messaging.Message(
         #     data={
@@ -151,12 +153,16 @@ def request_blood(request):
         # date = request.POST["date"]
 
         donors = User.objects.all()
+        print(user_instance.phoneNumber)
+        for donor in donors:
+            print(donor.phoneNumber)
 
         try:
             for donor in donors:
                 # print(donor.fcm, "donor fcm is shown here")
-                if 1:
+                if user_instance.phoneNumber != donor.phoneNumber:
                     # print(donor.fcm, donor.phoneNumber, "donor fcm is shown here chek")
+                    print(donor.phoneNumber)
                     message = messaging.Message(data = {
                         "name": name,
                         "age": age,
@@ -167,6 +173,7 @@ def request_blood(request):
                     }, token = donor.fcm)
 
                     response = messaging.send(message)
+                    time.sleep(5)
                     print(response)
 
             # print("Response sent")
@@ -311,3 +318,27 @@ def bank_update(request):
             "success": "true",
             "message": "The inventory is now updated."
         })
+
+def get_bank_data(request):
+    # conn = requests.get("https://data.gov.in/node/356981/datastore/export/json").json()
+    # print(conn)
+
+    # hospitals = []
+
+    # for hospital in range(0, len(conn["data"])):
+    #     if conn["data"][hospital][16] != "NA" and conn["data"][hospital][17] != "NA":
+    #         hospitals.append({
+    #             "name": conn["data"][hospital][4],
+    #             "latitude": conn["data"][hospital][16],
+    #             "longitude": conn["data"][hospital][17]
+    #         })
+    # print(hospitals[ : 100])
+
+    hospitals = [
+        {"City blood bank", "21.2409° N", "81.6207° E"},
+        {"Chattisgarh Blood Bank Raipur", "21.2440° N", "81.6119° E"},
+        {"Rajdhani Blood Bank Raipur", "21.2450° N", "81.6301° E"},
+        {"Red Cross Blood Bank", "21.2514° N", "81.6389° E"},
+        {"Shrishti Blood Bank", "21.2462° N", "81.6309° E"}
+    ]
+    return JsonResponse(hospitals)
