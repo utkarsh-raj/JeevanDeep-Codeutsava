@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">JeevanDeep</string>
+
+
+    <string name="message_channel">Direct and Group Messages</string>
+    <string name="message_channel_desc">Notifications for Direct and Group Messages for JeevanDeep.</string>
+
+
+    <string name="contact_us">Contact us</string>
+    <string name="about_us">about_us</string>
+    <string name="home">home</string>
+    <string name="login">login</string>
+    <string name="logout">logout</string>
+    <string name="search">search</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

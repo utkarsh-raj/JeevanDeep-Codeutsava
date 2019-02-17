@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="@color/colorOffWhite"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center">
+                
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@color/colorWhite"
+                    android:scaleType="fitXY"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/login_screen" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_extra_large"
+                    android:layout_marginEnd="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/margin_extra_large">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_normal"
+                        android:layout_gravity="center"
+                        android:background="@drawable/text_input"
+                        android:orientation="horizontal"
+                        android:weightSum="4"
+                        android:padding="@dimen/margin_small">
+                        <EditText
+                            android:id="@+id/et_mobileno"
+                            android:padding="@dimen/margin_normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:hint="Mobile Number"
+                            android:inputType="number"
+                            android:background="@color/transparent"
+                            android:textColorHint="#D3D3D3"
+                            android:textSize="@dimen/textsize_small_14sp"
+                            android:layout_weight="3.7"
+                            android:singleLine="true"/>
+                        <TextView
+                            android:id="@+id/tv_mobileno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile"
+                            android:gravity="end"
+                            android:textSize="10sp"
+                            android:textColor="#302F2F" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="65dp">
+                    <Button
+                        android:id="@+id/login_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_extra_large"
+                        android:layout_marginStart="1dp"
+                        android:text="GET OTP"
+                        android:textColor="@color/colorWhite"
+                        android:paddingHorizontal="@dimen/margin_extra_large"
+                        android:background="@drawable/background_gradient_button"
+                        android:elevation="@dimen/margin_small"
+                        />
+                    <Button
+                        android:id="@+id/signup_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:layout_marginEnd="1dp"
+                        android:text="Blood Bank Login"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccent"
+                        android:paddingHorizontal="@dimen/margin_extra_large"
+                        android:background="@drawable/oval_button_bordered"
+                        android:onClick="goToSignup"
+                        android:elevation="@dimen/margin_small"
+                        />
+
+                    </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/user_forgotpassword"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Blood Bank? Login Here"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textSize="12sp"-->
+                        <!--android:textColor="#302F2F"-->
+                        <!--android:onClick="goToForgotPassword"-->
+                        <!--android:layout_marginTop="@dimen/margin_bottom_very_very_small"-->
+                        <!--android:layout_gravity="center"/>-->
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
