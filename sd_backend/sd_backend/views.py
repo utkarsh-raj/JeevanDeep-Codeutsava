@@ -39,13 +39,15 @@ def fcm(request):
         print(request.POST)
         access_token = request.POST["access_token"]
         fcm = request.POST["fcm"]
-        print(fcm)
+        print(fcm, "fcm")
 
         authData = decodeJWT(access_token, "Secret Keyword")
+        print(authData)
 
         user_instance = User.objects.get(id = authData["userId"])
         user_instance.fcm = fcm
         user_instance.save()
+        print(user_instance.fcm, "fcm of the User is updated.")
 
         # message = messaging.Message(
         #     data={
@@ -137,6 +139,7 @@ def request_blood(request):
 
     user_instance = User.objects.get(id = authData["userId"])
     fcm = user_instance.fcm
+    # print(fcm, "The user fcm is shown.")
     
     if request.method == "POST":
         name = request.POST["name"]
@@ -149,26 +152,33 @@ def request_blood(request):
 
         donors = User.objects.all()
 
-        for donor in donors:
-            print(donor.fcm)
-            if fcm != donor.fcm or fcm == donor.fcm:
-                message = messaging.Message(data = {
-                    "name": name,
-                    "age": age,
-                    "phoneNumber": phoneNumber,
-                    "treatment": treatment,
-                    "number_of_units": number_of_units,
-                    "blood_group": blood_group
-                }, token = donor.fcm)
+        try:
+            for donor in donors:
+                # print(donor.fcm, "donor fcm is shown here")
+                if 1:
+                    # print(donor.fcm, donor.phoneNumber, "donor fcm is shown here chek")
+                    message = messaging.Message(data = {
+                        "name": name,
+                        "age": age,
+                        "phoneNumber": phoneNumber,
+                        "treatment": treatment,
+                        "number_of_units": number_of_units,
+                        "blood_group": blood_group
+                    }, token = donor.fcm)
 
-                response = messaging.send(message)
-                print(response)
+                    response = messaging.send(message)
+                    print(response)
 
-        print("Response sent")
-        return JsonResponse({
-            "success": "true",
-            "access_token": access_token
-        })
+            # print("Response sent")
+            return JsonResponse({
+                "success": "true",
+                "access_token": access_token
+            })
+        except:
+            return JsonResponse({
+                "success": "true",
+                "message": "It is an emergency."
+            })
 
 def bank_create(request):
     if request.method == "POST":

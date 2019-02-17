@@ -217,6 +217,7 @@ def user_signupComplete(request):
     user_instance = User.objects.get(id = authData["userId"])
 
     user_instance.name = request.POST["name"]
+    print(user_instance.name)
     user_instance.blood_group = request.POST["blood_group"]
     user_instance.location = request.POST["location"]
 
@@ -236,7 +237,7 @@ def bank_signup(request):
         phoneNumber = request.POST["phoneNumber"]
         name = request.POST["name"]
         location = request.POST["location"]
-        state = request.POST["state"]
+        # state = request.POST["state"]
 
         # # OTP generation
         # # We can deploy state algorithms to generate a better OTP if the need be.
