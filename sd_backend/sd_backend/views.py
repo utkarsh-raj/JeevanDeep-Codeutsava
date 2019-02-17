@@ -6,6 +6,7 @@ from authAPI.models import User, Verification, Blood_Bank, Donation, Blood_Unit,
 import jwt
 import time
 import requests
+import json
 firebase_admin.initialize_app(credentials.Certificate("/home/utkarsh/Downloads/sabkamalikek-36e1c-firebase-adminsdk-6n3ol-5bf162ba94.json"))
 
 def encrypt(string, secret):
@@ -319,26 +320,27 @@ def bank_update(request):
             "message": "The inventory is now updated."
         })
 
-def get_bank_data(request):
-    # conn = requests.get("https://data.gov.in/node/356981/datastore/export/json").json()
-    # print(conn)
+# def get_bank_data(request):
+#     if request.method == "POST":
+#         # conn = requests.get("https://data.gov.in/node/356981/datastore/export/json").json()
+#         # print(conn)
 
-    # hospitals = []
+#         # hospitals = []
 
-    # for hospital in range(0, len(conn["data"])):
-    #     if conn["data"][hospital][16] != "NA" and conn["data"][hospital][17] != "NA":
-    #         hospitals.append({
-    #             "name": conn["data"][hospital][4],
-    #             "latitude": conn["data"][hospital][16],
-    #             "longitude": conn["data"][hospital][17]
-    #         })
-    # print(hospitals[ : 100])
+#         # for hospital in range(0, len(conn["data"])):
+#         #     if conn["data"][hospital][16] != "NA" and conn["data"][hospital][17] != "NA":
+#         #         hospitals.append({
+#         #             "name": conn["data"][hospital][4],
+#         #             "latitude": conn["data"][hospital][16],
+#         #             "longitude": conn["data"][hospital][17]
+#         #         })
+#         # print(hospitals[ : 100])
 
-    hospitals = [
-        {"City blood bank", "21.2409° N", "81.6207° E"},
-        {"Chattisgarh Blood Bank Raipur", "21.2440° N", "81.6119° E"},
-        {"Rajdhani Blood Bank Raipur", "21.2450° N", "81.6301° E"},
-        {"Red Cross Blood Bank", "21.2514° N", "81.6389° E"},
-        {"Shrishti Blood Bank", "21.2462° N", "81.6309° E"}
-    ]
-    return JsonResponse(hospitals)
+#         hospitals = [
+#             {"City blood bank", "21.2409° N", "81.6207° E"},
+#             {"Chattisgarh Blood Bank Raipur", "21.2440° N", "81.6119° E"},
+#             {"Rajdhani Blood Bank Raipur", "21.2450° N", "81.6301° E"},
+#             {"Red Cross Blood Bank", "21.2514° N", "81.6389° E"},
+#             {"Shrishti Blood Bank", "21.2462° N", "81.6309° E"}
+#         ]
+#         return JsonResponse(json.dumps(hospitals))
