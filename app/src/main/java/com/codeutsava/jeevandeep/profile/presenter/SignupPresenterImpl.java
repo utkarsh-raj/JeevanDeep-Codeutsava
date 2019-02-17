@@ -19,10 +19,10 @@ public class SignupPresenterImpl implements SignupPresenter {
     }
 
     @Override
-    public void requestSignup(String user_name, String location, String bloodgroup, File profile_image, boolean is_imageupdated) {
+    public void requestSignup(String user_name, String location, String bloodgroup, String access_token,File profile_image, boolean is_imageupdated) {
         signupView.showProgressBar(true);
         signupView.showProgressDilog(true);
-        signupProvider.getSignupRequest(user_name,location, bloodgroup, profile_image, is_imageupdated, new SignupCallBack() {
+        signupProvider.getSignupRequest(user_name,location, bloodgroup, access_token, profile_image, is_imageupdated, new SignupCallBack() {
             @Override
             public void onSuccess(SignupResponse response) {
                 //Log.d("hello",response.getMessage());

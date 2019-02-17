@@ -1,6 +1,9 @@
 package com.codeutsava.jeevandeep.donationcampaignlist.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,8 @@ import com.codeutsava.jeevandeep.R;
 import com.codeutsava.jeevandeep.donationcampaignlist.data.DonationCampaignItem;
 import com.codeutsava.jeevandeep.donorlist.data.DonorItem;
 import com.codeutsava.jeevandeep.donorlist.view.DonorListFragment;
+import com.codeutsava.jeevandeep.home.HomeActivity;
+import com.codeutsava.jeevandeep.home.ReceiverFragment;
 import com.codeutsava.jeevandeep.utils.GlideImageLoader;
 import com.codeutsava.jeevandeep.utils.ImageLoader;
 import com.codeutsava.jeevandeep.utils.StringToTitleCase;
@@ -66,9 +71,33 @@ public class DonationCampaignListRecyclerViewAdapter extends RecyclerView.Adapte
 //        holder.mCompanyNameView.setText(networkItems.get(position).getCompany_name());
 //        holder.mNameView.setText(networkItems.get(position).getProfile_image());
         holder.mView.setOnClickListener(v -> {
+
+            Bundle bundle=new Bundle();
+            bundle.putString("campaignname", networkItems.get(position).getName());
+            bundle.putString("campaignlocation", networkItems.get(position).getLocation());
+            bundle.putString("campaignorganiser", networkItems.get(position).getOrganiser());
+            bundle.putString("campaigndescription", networkItems.get(position).getDescription());
+
+            donationCampaignListFragment.goToDetails(networkItems.get(position).getName(), networkItems.get(position).getDescription(),networkItems.get(position).getOrganiser(), networkItems.get(position).getLocation() );
+
+
+
+            //set Fragmentclass Arguments
+//            CampaignDetailsFragment campaignDetailsFragment = new CampaignDetailsFragment();
+//            campaignDetailsFragment.setArguments(bundle);
+
+//            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//
+//            transaction.replace(R.id.fragment_container, fragment);
+//
+//            transaction.commit();
+
+
 //            Intent intent = new Intent(context, ProfileActivity.class);
 //            intent.putExtra("user_table_id", networkItems.get(position).getUser_table_id());
 //            context.startActivity(intent);
+
+
         });
     }
 

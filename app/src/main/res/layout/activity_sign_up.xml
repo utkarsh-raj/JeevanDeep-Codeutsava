@@ -21,7 +21,7 @@
             <Toolbar
                 android:id="@+id/toolbar"
                 style="@style/ToolbarTheme"
-                android:layout_width="118dp"
+                android:layout_width="247dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/colorOffWhite"
@@ -159,9 +159,6 @@
                             android:textSize="10sp"
                             android:textColor="#302F2F" />
                     </LinearLayout>
-
-
-
 
 
                     <LinearLayout

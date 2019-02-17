@@ -47,9 +47,12 @@ def fcm(request):
         authData = decodeJWT(access_token, "Secret Keyword")
         print(authData)
 
-        user_instance = User.objects.get(id = authData["userId"])
-        user_instance.fcm = fcm
-        user_instance.save()
+        try:
+            user_instance = User.objects.get(id = authData["userId"])
+            user_instance.fcm = fcm
+            user_instance.save()
+        except:
+            pass
         # print(user_instance.fcm, "fcm of the User is updated.")
 
         # message = messaging.Message(
@@ -77,7 +80,10 @@ def req(request):
         authData = decodeJWT(access_token, "Secret Keyword")
         print(authData)
 
-        user_instance = User.objects.get(id = authData["userId"])
+        try:
+            user_instance = User.objects.get(id = authData["userId"])
+        except:
+            pass
         
         donors = User.objects.all()
 
@@ -140,9 +146,12 @@ def request_blood(request):
     authData = decodeJWT(access_token, "Secret Keyword")
     print(authData)
 
-    user_instance = User.objects.get(id = authData["userId"])
-    fcm = user_instance.fcm
-    # print(fcm, "The user fcm is shown.")
+    try:
+        user_instance = User.objects.get(id = authData["userId"])
+        fcm = user_instance.fcm
+        # print(fcm, "The user fcm is shown.")
+    except:
+        pass
     
     if request.method == "POST":
         name = request.POST["name"]
@@ -154,9 +163,9 @@ def request_blood(request):
         # date = request.POST["date"]
 
         donors = User.objects.all()
-        print(user_instance.phoneNumber)
-        for donor in donors:
-            print(donor.phoneNumber)
+        # print(user_instance.phoneNumber)
+        # for donor in donors:
+        #     print(donor.phoneNumber)
 
         try:
             for donor in donors:

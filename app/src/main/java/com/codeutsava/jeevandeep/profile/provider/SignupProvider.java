@@ -6,6 +6,6 @@ import java.io.File;
 
 public interface SignupProvider {
 
-    void getSignupRequest(String user_name, String location, String bloodgroup, File profile_image, boolean is_imageupdated, SignupCallBack callBack);
+    void getSignupRequest(String user_name, String location, String bloodgroup, String access_token, File profile_image, boolean is_imageupdated, SignupCallBack callBack);
 }
 

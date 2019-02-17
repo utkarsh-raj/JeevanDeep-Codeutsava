@@ -23,6 +23,7 @@ import com.codeutsava.jeevandeep.auth.otpverify.presenter.OtpVerfiyPresenter;
 import com.codeutsava.jeevandeep.auth.otpverify.presenter.OtpVerifyPtresenterImpl;
 import com.codeutsava.jeevandeep.auth.otpverify.provider.OtpverifyRetrofitProvider;
 import com.codeutsava.jeevandeep.home.HomeActivity;
+import com.codeutsava.jeevandeep.profile.view.SignUpActivity;
 import com.codeutsava.jeevandeep.utils.NetworkUtils;
 import com.codeutsava.jeevandeep.utils.SharedPrefs;
 import com.codeutsava.jeevandeep.utils.resendotp.RetrofitRegenerateOtpProvider;
@@ -262,7 +263,7 @@ public class OtpVerifyActivity extends AppCompatActivity implements OtpVerifyVie
         sharedPrefs.setAccessToken(access_token);
         sharedPrefs.setMobileNumber(contactNo);
 //        Intent next = new Intent(this, HomeActivity.class);
-        Intent next = new Intent(this, HomeActivity.class);
+        Intent next = new Intent(this, SignUpActivity.class);
         startActivity(next);
         finish();
     }

@@ -33,6 +33,14 @@ public class BloodBankListRecyclerViewAdapter extends RecyclerView.Adapter<Blood
     private List<BloodBankItem> networkItems = new ArrayList<>();
     private ImageLoader imageLoader;
 
+//    ArrayList<Location> locations;
+//    Location location1;
+//    Location location2;
+//    Location location3;
+//    Location location4;
+//    Location location5;
+
+
     public BloodBankListRecyclerViewAdapter(Context context, BloodBankListFragment networkListFragment) {
         this.context = context;
         this.networkListFragment = networkListFragment;
@@ -42,6 +50,13 @@ public class BloodBankListRecyclerViewAdapter extends RecyclerView.Adapter<Blood
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_bloodbank, parent, false);
+//
+//        location1 = new Location("City blood bank", "21.2409° N", "81.6207° E");
+//        location2 = new Location("Chattisgarh Blood Bank Raipur", "21.2440° N", "81.6119° E");
+//        location3 = new Location("Rajdhani Blood Bank Raipur", "21.2450° N", "81.6301° E");
+//        location4 = new Location("Red Cross Blood Bank", "21.2514° N", "81.6389° E");
+//        location5 = new Location("Shrishti Blood Bank", "21.2462° N", "81.6309° E");
+
         return new ViewHolder(view);
     }
 
@@ -82,6 +97,17 @@ public class BloodBankListRecyclerViewAdapter extends RecyclerView.Adapter<Blood
         holder.mBloodBankAddressLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String latitude;
+                String longitude;
+                String name;
+
+//                for(int i = 1; i<=5; i++){
+//                    Math.random(5);
+//                }
+//
+//                int i=1;
+//                String locationss = "location"+i;
+//                ArrayList<Location> arr = {location1};
 
                 Uri mapUri = Uri.parse("geo:0,0?q="+networkItems.get(position).getLatitude()+","+networkItems.get(position).getLongitude()+"(" + networkItems.get(position).getName() + ")");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);

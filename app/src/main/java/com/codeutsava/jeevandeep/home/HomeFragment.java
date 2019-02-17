@@ -1,11 +1,22 @@
 package com.codeutsava.jeevandeep.home;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.SpannableString;
@@ -19,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeutsava.jeevandeep.R;
+import com.codeutsava.jeevandeep.auth.login.view.LoginActivity;
+import com.codeutsava.jeevandeep.utils.MyLocationListener;
 import com.codeutsava.jeevandeep.utils.SharedPrefs;
 import com.codeutsava.jeevandeep.utils.fcm.RetrofitSendFCMProvider;
 import com.codeutsava.jeevandeep.utils.fcm.presenter.SendFCMPresenter;
@@ -27,6 +40,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +55,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  {
 
     @BindView(R.id.donateBlood)
     CardView donateBlood;
@@ -65,9 +85,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
-        final SharedPrefs sharedPrefs= new SharedPrefs(context);
+        final SharedPrefs sharedPrefs = new SharedPrefs(context);
 
         sendFCMPresenter = new SendFCMPresenterImpl(new RetrofitSendFCMProvider());
 
@@ -85,8 +105,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-        LocationManager locationManager = (LocationManager)
-                context.getSystemService(Context.LOCATION_SERVICE);
+        getLocation();
 
         String donateBloodString= "I want to Donate";
         SpannableString spanDonate=  new SpannableString(donateBloodString);
@@ -122,5 +141,38 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    public void getLocation(){
+
+        LocationManager locationManager = (LocationManager)
+                context.getSystemService(Context.LOCATION_SERVICE);
+
+
+
+
+
+    }
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Need Permissions");
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
+            dialog.cancel();
+            openSettings();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
+
+    }
+
 
 }
+
+

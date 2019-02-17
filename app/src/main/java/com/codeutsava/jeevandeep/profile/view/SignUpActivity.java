@@ -58,8 +58,6 @@ public class SignUpActivity extends AppCompatActivity implements SignupView {
     EditText userFullName;
     @BindView(R.id.et_name)
     EditText userLocation;
-    @BindView(R.id.et_mobileno)
-    EditText userMobileNo;
 
     @BindView(R.id.spinner)
     Spinner spinner;
@@ -142,26 +140,26 @@ public class SignUpActivity extends AppCompatActivity implements SignupView {
         signUpButton.setOnClickListener(v -> {
 
 
-            if (stringUserFullName.isEmpty()) {
-                userFullName.setError("Please enter your name");
-                userFullName.setFocusable(true);
-                userFullName.requestFocus();
-            } else {
-                if (stringUserLocation.isEmpty()) {
-                    userLocation.setError("Please enter your company name");
-                    userLocation.setFocusable(true);
-                    userLocation.requestFocus();
-                }
-                else{
+//            if (stringUserFullName.isEmpty()) {
+//                userFullName.setError("Please enter your name");
+//                userFullName.setFocusable(true);
+//                userFullName.requestFocus();
+//            } else {
+//                if (stringUserLocation.isEmpty()) {
+//                    userLocation.setError("Please enter your company name");
+//                    userLocation.setFocusable(true);
+//                    userLocation.requestFocus();
+//                }
+//                else{
                     if (is_imageUpdated) {
-                        signupPresenter.requestSignup(stringUserFullName, stringUserLocation, stringBloodGroup, ImageFileUtils.BitmapToFileConverter(context, userImageBitmap), is_imageUpdated);
+                        signupPresenter.requestSignup(stringUserFullName, stringUserLocation, stringBloodGroup, sharedPrefs.getAccessToken(), ImageFileUtils.BitmapToFileConverter(context, userImageBitmap), is_imageUpdated);
                     } else {
-                        signupPresenter.requestSignup(stringUserFullName, stringUserLocation, stringBloodGroup, null, is_imageUpdated);
+                        signupPresenter.requestSignup(stringUserFullName, stringUserLocation, stringBloodGroup, sharedPrefs.getAccessToken(), null, is_imageUpdated);
                     }
 
-                }
-
-            }
+//                }
+//
+//            }
         });
 
     }
@@ -232,7 +230,7 @@ public class SignUpActivity extends AppCompatActivity implements SignupView {
     @Override
     public void showMessage(String message) {
         progressDialog.dismiss();
-//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this, R.style.AlertDialogTheme);
+//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(InventoryActivity.this, R.style.AlertDialogTheme);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this);
         alertDialog.setTitle("Error")
                 .setMessage(message)
@@ -259,7 +257,7 @@ public class SignUpActivity extends AppCompatActivity implements SignupView {
 //        sharedPrefs.setLoginSkipped(true);
 //        sharedPrefs.setLoggedInOurApp(false);
 
-        Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

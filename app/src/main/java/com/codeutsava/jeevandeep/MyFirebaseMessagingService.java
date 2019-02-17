@@ -31,11 +31,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService  {
     private SharedPrefs sharedPrefs;
     private static final String KEY_TEXT_REPLY = "key_text_reply";
     public static final String CHANNEL_ID = "1";
-
     public static String TAG = "FIREBASE_SERVICE";
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
+
         createNotificationChannel();
 
         sharedPrefs = new SharedPrefs(getApplicationContext());

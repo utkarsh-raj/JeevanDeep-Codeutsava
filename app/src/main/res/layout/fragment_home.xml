@@ -33,7 +33,8 @@
                     android:orientation="horizontal"
                     android:weightSum="1.2"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:background="@drawable/background1">
 
                     <ImageView
                         android:layout_width="0sp"
@@ -50,7 +51,7 @@
                         android:layout_weight=".5"
                         android:gravity="center"
                         android:text="I want to donate"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/black" />
 
 
                     <ImageView
@@ -101,7 +102,8 @@
                 android:orientation="horizontal"
                 android:weightSum="1.2"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:background="@drawable/background2">
 
                 <ImageView
                     android:layout_width="0sp"
@@ -118,7 +120,7 @@
                     android:layout_weight=".5"
                     android:gravity="center"
                     android:text="I need blood"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/white" />
 
 
                 <ImageView

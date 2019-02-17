@@ -59,8 +59,8 @@ public class IntroSliderViewPagerAdapter extends PagerAdapter {
 
 
         /**Assigning Values to views*/
-        viewPagerDiscriptionTextView.setText("Test");
-        viewPagerTextView.setText("test");
+        viewPagerDiscriptionTextView.setText("Donate Blood");
+        viewPagerTextView.setText("The blood you donate gives someone another chance to live");
 
         return view;
     }

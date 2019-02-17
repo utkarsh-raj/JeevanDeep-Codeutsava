@@ -18,6 +18,7 @@ import android.widget.Toolbar;
 
 
 import com.codeutsava.jeevandeep.R;
+import com.codeutsava.jeevandeep.auth.bloodbanklogin.view.BloodBankLoginActivity;
 import com.codeutsava.jeevandeep.auth.login.presenter.LoginPresenter;
 import com.codeutsava.jeevandeep.auth.login.presenter.LoginPresenterImpl;
 import com.codeutsava.jeevandeep.auth.login.provider.LoginRetrofitProvider;
@@ -111,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showMessage(String message) {
         progressDialog.dismiss();
-//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this, R.style.AlertDialogTheme);
+//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(BloodBankLoginActivity.this, R.style.AlertDialogTheme);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
         alertDialog.setTitle("Please try again!")
                 .setMessage(message)
@@ -140,7 +141,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         sharedPrefs.setMobileNumber(editTextMobile.getText().toString());
         sharedPrefs.setAccessToken(access_token);
-        Toast.makeText(this, ""+sharedPrefs.getAccessToken(), Toast.LENGTH_SHORT).show();
         finish();
 
     }
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void onLoginfailure(String userNo) {
 //        progressDialog.dismiss();
-//        Intent otpPageIntent = new Intent(LoginActivity.this, OtpVerifyActivity.class);
+//        Intent otpPageIntent = new Intent(BloodBankLoginActivity.this, OtpVerifyActivity.class);
 //        otpPageIntent.putExtra("mobile", userNo);
 //        startActivity(otpPageIntent);
 //        finish();
@@ -156,13 +156,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     public void goToSignup(View view) {
-//        Intent signup = new Intent(LoginActivity.this, SignUpActivity.class);
-//        startActivity(signup);
-//        finish();
+        Intent signup = new Intent(this, BloodBankLoginActivity.class);
+        startActivity(signup);
+        finish();
     }
 
     public void goToForgotPassword(View view) {
-//        Intent forgotpassword = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+//        Intent forgotpassword = new Intent(BloodBankLoginActivity.this, ForgotPasswordActivity.class);
 //        startActivity(forgotpassword);
 //        finish();
     }

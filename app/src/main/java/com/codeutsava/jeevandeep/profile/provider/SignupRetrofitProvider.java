@@ -25,6 +25,7 @@ public class SignupRetrofitProvider implements SignupProvider {
 
     private SignupApi signupApi;
     private Retrofit retrofit;
+    Call<SignupResponse> responseCall;
 
 
     public SignupRetrofitProvider() {
@@ -46,23 +47,24 @@ public class SignupRetrofitProvider implements SignupProvider {
     }
 
     @Override
-    public void getSignupRequest(String user_name, String location, String bloodgroup, File profile_image, boolean is_imageupdated, final SignupCallBack callBack) {
+    public void getSignupRequest(String user_name, String location, String bloodgroup, String access_token, File profile_image, boolean is_imageupdated, final SignupCallBack callBack) {
 
-        RequestBody username = RequestBody.create( MediaType.parse("multipart/form-data"), user_name);
-        RequestBody userlocation = RequestBody.create( MediaType.parse("multipart/form-data"), location);
-        RequestBody userbloodgroup = RequestBody.create( MediaType.parse("multipart/form-data"), bloodgroup);
-        MultipartBody.Part userimage;
+//        RequestBody username = RequestBody.create( MediaType.parse("multipart/form-data"), user_name);
+//        RequestBody userlocation = RequestBody.create( MediaType.parse("multipart/form-data"), location);
+//        RequestBody userbloodgroup = RequestBody.create( MediaType.parse("multipart/form-data"), bloodgroup);
+//        RequestBody useraccesstoken = RequestBody.create( MediaType.parse("multipart/form-data"), access_token);
+//        MultipartBody.Part userimage;
 
-        if(is_imageupdated){
-            RequestBody imagebody = RequestBody.create(MediaType.parse("multipart/form-data"), profile_image);
-            userimage = MultipartBody.Part.createFormData("profile_image", profile_image.getName(), imagebody);
-        }
-        else{
-            RequestBody imagebody = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-            userimage = MultipartBody.Part.createFormData("profile_image", "", imagebody);
-        }
+//        if(is_imageupdated){
+//            RequestBody imagebody = RequestBody.create(MediaType.parse("multipart/form-data"), profile_image);
+//            userimage = MultipartBody.Part.createFormData("profile_image", profile_image.getName(), imagebody);
+//        }
+//        else{
+//            RequestBody imagebody = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+//            userimage = MultipartBody.Part.createFormData("profile_image", "", imagebody);
+//        }
 
-        Call<SignupResponse> responseCall = signupApi.getSignupDetails(username, userlocation, userbloodgroup, userimage);
+        responseCall = signupApi.getSignupDetails(user_name, location, bloodgroup, access_token);
         responseCall.enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {

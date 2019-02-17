@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 //    implementation 'com.github.hedzr:android-file-chooser:master-SNAPSHOT'
-    implementation  group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.0-alpha3'
+    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.0-alpha3'
     implementation "com.airbnb.android:lottie:2.5.0"
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

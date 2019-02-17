@@ -195,7 +195,7 @@ public class RequestForBloodFragment extends Fragment implements RequestForBlood
     @Override
     public void showMessage(String message) {
         progressDialog.dismiss();
-//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this, R.style.AlertDialogTheme);
+//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(InventoryActivity.this, R.style.AlertDialogTheme);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Error")
                 .setMessage(message)

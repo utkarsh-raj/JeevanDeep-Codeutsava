@@ -1,6 +1,7 @@
 package com.codeutsava.jeevandeep.donationcampaignlist.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -133,6 +134,16 @@ public class DonationCampaignListFragment extends Fragment implements DonationCa
         networkListRecyclerViewAdapter.setData(feedListResponse.getNews_feed_list());
         networkListRecyclerViewAdapter.notifyDataSetChanged();
     }
+
+    public void goToDetails(String name, String description, String organizer, String venue){
+        Intent intent = new Intent(getActivity(), DonationCampaignDetails.class);
+        intent.putExtra("name", name);
+        intent.putExtra("description", description);
+        intent.putExtra("organizer", organizer);
+        intent.putExtra("venue", venue);
+        startActivity(intent);
+    }
+
 
 
     /**
