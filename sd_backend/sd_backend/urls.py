@@ -20,6 +20,14 @@ from sd_backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authAPI.urls')),
-    path('', views.splash, name='splash'),
-    path('feed/', include('ask_feed.urls'),)
+    path('splash/', views.splash, name='splash'),
+    path('fcm/', views.fcm, name="fcm"),
+    path('req/', views.req, name="request"),
+    path('bank/create_campaign/', views.bank_create, name="bank_create_campaign"),
+    path('bank/req/', views.bank_req, name="bank_req"),
+    path('request_blood/', views.request_blood, name="request_blood"),
+    path('add_donation/', views.add_donation, name="add_donation"),
+    path('bank/campaign/req', views.campaign_list, name="campaign_list"),
+    # path('view_donations/', views.view_donations, name="view_donations"),
+    path('bank/update/', views.bank_update, name="update_banks")
 ]

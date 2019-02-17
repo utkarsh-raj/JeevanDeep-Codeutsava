@@ -25,7 +25,7 @@ SECRET_KEY = 'mj^qa*_q16&8(_8df$x9(2(+08+n!3_b7^vm3plpf_&)wq#1%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["smoothdramabackend.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["smoothdramabackend.pythonanywhere.com", "172.22.124.179"]
 
 
 # Application definition
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authAPI.apps.AuthConfigAPI',
-    'ask_feed.apps.AskFeedConfig',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +119,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# APPEND_SLASH = False

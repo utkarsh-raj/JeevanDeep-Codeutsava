@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from authAPI.models import User, Verification
+from authAPI.models import User, Verification, Blood_Bank, Donation, Blood_Unit
 from django.http import JsonResponse
 import jwt
 from hashlib import sha256
@@ -41,7 +41,7 @@ def decodeJWT(data, secret):
     Method to handle the login endpoint.
 """
 
-def login(request):
+def user_login(request):
     """
     Method to handle the login endpoint.
     """
@@ -49,10 +49,9 @@ def login(request):
     # Extraction of the form data
     if request.method == "POST":
         phoneNumber = request.POST["phoneNumber"]
-        password = request.POST["password"]
 
         # Generate the encrypted password for saving in the DB
-        hashString = encrypt(password, "Secret Keyword")
+        hashString = encrypt(phoneNumber, "Secret Keyword")
 
         try:
 
@@ -70,7 +69,7 @@ def login(request):
 
             # Building response payload for the response
             response = {
-                "success": "True",
+                "success": "true",
                 "message": "Login Successful",
                 "token": str(token)[2 : -1]
             }
@@ -82,25 +81,24 @@ def login(request):
                 "loginError": "The user is not signed up yet!"
             })
 
-def signup(request):
+def user_signup(request):
     """
         Method to handle signup endpoint
     """
     if request.method == "POST":
         # If the request is POST, extract the form data
         phoneNumber = request.POST["phoneNumber"]
-        password = request.POST["password"]
 
         # OTP generation
         # We can deploy state algorithms to generate a better OTP if the need be.
-        otp = "".join(str(x) for x in [randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9)])
+        otp = "".join(str(x) for x in [randint(1, 9), randint(1, 9), randint(1, 9), randint(1, 9)])
         
         # Calling the SMS Service provider API and decoding the information
         # The request is a GET Request to a server, and should be converted to POST requests in next builds
         conn = requests.get("http://control.msg91.com/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
 
         # Initialize new User Object and Verification Object
-        user = User(phoneNumber = phoneNumber, password = password)
+        user = User(phoneNumber = phoneNumber)
         user.save()
         verification = Verification(otp = otp, user = user, numberOfTries = 1)
         verification.save()
@@ -116,23 +114,30 @@ def signup(request):
         token = encodeJWT(authData, "Secret Keyword")
 
         return JsonResponse({
-            "success": "True",
+            "success": "true",
             "message": "redirect to endpoint for the otp",
-            "token": str(token)[2 : -1]
+            "access_token": str(token)[2 : -1]
+        })
+    else:
+        return JsonResponse({
+            "message": "Hello World"
         })
 
-def signupOTPHandling(request):
+def user_signupOTPHandling(request):
     """
         Method to handle the OTP endpoint
         The Authorization header is required
     """
     # Extract the token
-    token = request.META["HTTP_AUTHORIZATION"].split()
-    token = token[1]
+    # token = request.META["HTTP_AUTHORIZATION"].split()
+    # token = token[1]
+    access_token = request.POST["access_token"]
     # Extraction completed
+    print(access_token)
 
     # Decode the token to get the payload
-    authData = decodeJWT(token, "Secret Keyword")
+    authData = decodeJWT(access_token, "Secret Keyword")
+    print(authData)
 
     # Get the corresponding user and the Verification Object from the DB which are required for verification
     verificationObject = Verification.objects.get(id = authData["verificationId"])
@@ -158,11 +163,11 @@ def signupOTPHandling(request):
         }
 
         # Encoding the token
-        token = encodeJWT(authData, "Secret Keyword")
+        access_token = encodeJWT(authData, "Secret Keyword")
         return JsonResponse({
-            "success": "True",
+            "success": "true",
             "message": "redirect to the endpoint for completing the profile",
-            "token": token
+            "access_token": str(access_token)[2 : -1]
         })
     else:
         return JsonResponse({
@@ -170,7 +175,7 @@ def signupOTPHandling(request):
             "message": "The otp is not corect"
         })
 
-def resendOTP(request):
+def user_resendOTP(request):
     # Extract the token
     token = request.META["HTTP_AUTHORIZATION"].split()
     token = token[1]
@@ -200,6 +205,66 @@ def resendOTP(request):
     verificationObject.save()
 
     return JsonResponse({
-        "status": "success",
+        "success": "true",
         "message": "redirect to the enter OTP endpoint"
     })
+
+def user_signupComplete(request):
+    access_token = request.POST["access_token"]
+
+    authData = decodeJWT(access_token, "Secret Keyword")
+
+    user_instance = User.objects.get(id = authData["userId"])
+
+    user_instance.name = request.POST["name"]
+    user_instance.blood_group = request.POST["blood_group"]
+    user_instance.location = request.POST["location"]
+
+    user_instance.save()
+
+    return JsonResponse({
+        "success": "true",
+        "token": access_token
+    })
+
+def bank_signup(request):
+    """
+    Method to handle the login endpoint.
+    """
+    if request.method == "POST":
+        # If the request is POST, extract the form data
+        phoneNumber = request.POST["phoneNumber"]
+        name = request.POST["name"]
+        location = request.POST["location"]
+        state = request.POST["state"]
+
+        # # OTP generation
+        # # We can deploy state algorithms to generate a better OTP if the need be.
+        # otp = "".join(str(x) for x in [randint(0, 9), randint(0, 9), randint(0, 9), randint(0, 9)])
+        
+        # # Calling the SMS Service provider API and decoding the information
+        # # The request is a GET Request to a server, and should be converted to POST requests in next builds
+        # conn = requests.get("http://control.msg91.com/api/sendhttp.php?country=91&sender=CodeNi&route=4&mobiles=" + phoneNumber + "&authkey=243883A5rE7Q42GvZv5bcd771c&message=The%20verification%20OTP%20is%20" + otp)
+
+        # # Initialize new User Object and Verification Object
+        # user = User(phoneNumber = phoneNumber)
+        # user.save()
+        # verification = Verification(otp = otp, user = user, numberOfTries = 1)
+        # verification.save()
+
+        blood_bank_instance = Blood_Bank(phoneNumber = phoneNumber, location = location, name = name, state = state)
+        blood_bank_instance.save()
+
+        # Make the token payload
+        authData = {
+            "bankId": blood_bank_instance.id,
+            "phoneNumber": blood_bank_instance.phoneNumber
+        }
+
+        # Encoding the token
+        access_token = encodeJWT(authData, "Secret Keyword")
+
+        return JsonResponse({
+            "success": "true",
+            "token": str(access_token)[2 : -1]
+        })
